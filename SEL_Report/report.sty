@@ -6,6 +6,12 @@
 \usepackage{graphicx} % For including images
 \usepackage{caption} % For figure captions
 \usepackage{float} % For precise figure placement
+\usepackage{titlesec} % For controlling chapter spacing
+
+% Reduce spacing between chapters and sections
+\titlespacing*{\chapter}{0pt}{-10pt}{10pt}
+\titlespacing*{\section}{0pt}{5pt}{5pt}
+\titlespacing*{\subsection}{0pt}{3pt}{3pt}
 
 \title{Requirement Analysis Introduction And UML Diagram Report \\ University Portal Management System}
 \author{Raihan Zaman and Mostafa Wasif }
@@ -123,8 +129,6 @@ The technical process outlines the methodologies and tools for implementation, e
 
 This process emphasizes best practices like version control (Git) and code reviews to mitigate risks and ensure a scalable system.
 
-% -------------------- UML AND LOGIC SECTION --------------------
-
 \chapter{UML Diagrams and Process Logic}
 
 % -------------------- USE CASE DIAGRAM PAGE --------------------
@@ -145,5 +149,87 @@ This process emphasizes best practices like version control (Git) and code revie
 
 \clearpage
 
+% -------------------- SEQUENCE DIAGRAM PAGE --------------------
+\thispagestyle{plain}
+\begin{center}
+\Large \textbf{Sequence Diagram}
+\end{center}
+
+\vspace{1em}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{sequence_diagram.png}
+\caption{Sequence Diagram: Enrollment Process Example}
+\label{fig:sequence}
+\end{figure}
+
+\clearpage
+
+% -------------------- PROCESS LOGIC SECTION --------------------
+\section{Loop, Alternatives, and Conditional Logic}
+
+This section describes procedural decision behavior derived from the system’s requirements using structured English control logic.
+
+\subsection{System Decision Logic (Structured English)}
+
+\begin{verbatim}
+BEGIN SYSTEM OPERATION
+
+IF student submits enrollment request THEN
+    Validate student credentials
+    IF student is active THEN
+        Check course prerequisites
+        IF prerequisites satisfied THEN
+            Add request to advisor approval queue
+        ELSE
+            Reject enrollment request
+            Notify student "Prerequisite not satisfied"
+        END IF
+    ELSE
+        Reject enrollment request
+        Notify student "Inactive status"
+    END IF
+END IF
+
+
+IF attendance percentage >= 50 THEN
+    Mark attendance as "Satisfactory"
+    Notify student of current status
+ELSE
+    Mark attendance as "Fail"
+    Send alert notification to student
+    Send alert notification to advisor
+END IF
+
+
+IF number of leave applications <= 5 THEN
+    Accept leave request
+    Forward leave request to advisor
+ELSE
+    Reject leave request
+    Notify student "Leave limit exceeded"
+END IF
+
+
+IF user role = "Teacher" THEN
+    Provide access to attendance upload
+    Provide access to course materials
+    Provide access to messaging system
+
+ELSE IF user role = "Advisor" THEN
+    Provide access to enrollment approvals
+    Provide access to batch communication
+
+ELSE IF user role = "Admin" THEN
+    Provide full system access
+    Provide user management privileges
+    Provide password recovery privileges
+END IF
+
+END SYSTEM OPERATION
+\end{verbatim}
+
+This logical structuring ensures that system operations follow the defined rules while handling exceptions gracefully, providing a robust and predictable behavior across all user interactions.
 
 \end{document}
