@@ -1,4 +1,11 @@
-
+\documentclass[a4paper,12pt]{report}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tocloft} % For table of contents customization
+\usepackage{enumitem} % For better lists
+\usepackage{graphicx} % For including images
+\usepackage{caption} % For figure captions
+\usepackage{float} % For precise figure placement
 \usepackage{titlesec} % For controlling chapter spacing
 
 % Reduce spacing between chapters and sections
@@ -6,6 +13,141 @@
 \titlespacing*{\section}{0pt}{5pt}{5pt}
 \titlespacing*{\subsection}{0pt}{3pt}{3pt}
 
+\title{Requirement Analysis Introduction And UML Diagram Report \\ University Portal Management System}
+\author{Raihan Zaman and Mostafa Wasif }
+\date{17 February 2026}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents % Indexing via Table of Contents
+
+\chapter{Introduction}
+The requirement analysis report provides a comprehensive introduction to the requirements for the University Portal Management System. The system is designed as a secure, role-based web application to facilitate interactions among students, teachers, and administrators in a university setting. It addresses Vital challenges in academic management, such as manual processes, communication gaps, and lack of centralized resources. The following sections outline a brief summary of the project, user interface overview, functional requirements, project boundaries, team roles, development process model, technical processes, and non-functional requirements. This analysis ensures that the system meets user needs while adhering to modern software engineering practices, incorporating updates such as Next.js for unified frontend and backend, Prisma ORM for MySQL integration, and enhanced security features like API endpoint obfuscation.
+
+\section{Brief Summary of the University Portal Management System}
+The University Portal Management System is a web-based platform aimed at streamlining academic operations within a university environment. It supports three primary user entities: students, teachers (with sub-roles including course teachers, advisors, and department chairmen), and administrators. The system enables efficient management of course enrollments, lab report submissions, internal communications, attendance tracking, and administrative oversight.
+
+Key problems addressed by the system include:
+- \textbf{Manual Enrollment and Approvals}: Traditional methods often lead to delays, paperwork errors, and inefficiencies. The portal automates enrollment requests, allowing students to submit applications semester-wise and section-specific, with advisors approving them digitally.
+- \textbf{Scattered Communication}: Students and faculty rely on disparate tools like emails or messaging apps, leading to missed updates. The system introduces an internal mailing feature where students can send messages to specific roles (e.g., course teachers or advisors), with restrictions to prevent abuse, such as limiting leave applications to five per month.
+- \textbf{Attendance Management Issues}: Manual attendance tracking is prone to inaccuracies and fails to enforce policies consistently. The portal allows teachers to upload attendance data, automatically designating students with less than 50\% attendance as "Fail" and notifying them, while permitting updates for corrections.
+- \textbf{Lack of Centralized Resources}: Course materials, lesson plans, and submissions are often decentralized. The system provides a unified repository for uploads and views, supporting various file formats (PDF, DOCX, LaTeX, PPT).
+- \textbf{Administrative Overload}: Administrators handle everything manually, from role assignments to password management. The portal grants admins full control, including viewing decrypted student passwords for recovery purposes (with security caveats).
+
+The motivation for this project stems from the need to digitize academic workflows, reduce administrative burdens, enhance transparency, and improve user satisfaction. By automating routine tasks, the system allows faculty to focus on teaching and students on learning, ultimately fostering a more efficient educational ecosystem. Recent updates include integration of Next.js for a responsive, server-side rendered interface, Prisma for type-safe database operations with MySQL, and security enhancements like API endpoint obfuscation to prevent exposure in browser developer tools.
+
+\section{Summary of the User Interface}
+The user interface (UI) of the University Portal Management System is designed to be intuitive, responsive, and role-specific, ensuring that each user type accesses only relevant features. Built with Next.js and Tailwind CSS for the frontend, the UI emphasizes simplicity, accessibility, and mobile compatibility. Dashboards are customized: students see enrollment options and submission forms; teachers have tools for uploads and approvals; admins have comprehensive controls. The sidebar navigation is collapsible and responsive, adapting to screen sizes for seamless use on desktops and mobiles.
+
+The UI incorporates modern design principles, such as clean navigation menus, real-time notifications for updates (e.g., enrollment status or low attendance alerts), and secure forms for data entry. Visual elements include progress trackers for attendance and interactive lists for course selections. This summary highlights how the UI supports functional requirements while maintaining usability, with updates incorporating Tailwind for styling and server-side rendering for security.
+
+\subsection{Functional Requirements and Deliverables}
+The functional requirements define what the system must do to meet user needs. These are categorized by user roles and include detailed specifications for deliverables. Updates reflect the addition of announcement and notification features, as well as enhanced messaging with threading support.
+
+\textbf{Student Functional Requirements:}
+- Registration: Students can create accounts with auto-generated 12-digit unique IDs (last four digits batch-specific), including details like name, age, batch, semester, section, etc.
+- Authentication: Secure login/logout with password protection.
+- Enrollment: Request enrollment in current semester courses, view status, and receive notifications.
+- Submissions: Upload lab reports in supported formats (PDF, DOCX, LaTeX, PPT) to enrolled courses.
+- Communication: Send internal mails to course teachers, advisors, or chairmen, with a limit of five leave applications per month to advisors.
+- Viewing: Access lesson plans, course materials, and announcements for enrolled courses.
+- Attendance Awareness: View attendance percentages and receive alerts for low attendance.
+- Deliverables: Student dashboard with forms, upload interfaces, notification panels, and responsive sidebar navigation.
+
+\textbf{Teacher Functional Requirements:}
+- Role-Specific Access: Course teachers upload materials/lesson plans and announcements; advisors approve enrollments and handle batch-specific mails; chairmen assign roles and view department-wide communications.
+- Attendance Management: Upload attendance percentages; system auto-fails students below 50\% and sends notifications; allow updates to override.
+- Communication: Reply to student mails with threading support.
+- Deliverables: Teacher dashboard with upload forms, approval buttons, filtered inboxes, and sidebar for sub-role tools.
+
+\textbf{Admin Functional Requirements:}
+- Oversight: Manage all entities, create courses, assign teachers/advisors, and view all records.
+- Security: Access decrypted student passwords for administrative purposes.
+- Deliverables: Admin console with search, edit, and reporting tools, including sidebar for quick access.
+
+\subsection{Non-Functional Requirements}
+Non-functional requirements specify the quality attributes of the system, ensuring it performs reliably under various conditions.
+
+- \textbf{Performance}: The system shall respond to 95\% of user requests within 2 seconds under normal load (up to 1,000 concurrent users), with API endpoints optimized using Prisma queries and Next.js caching.
+- \textbf{Scalability}: The system shall support horizontal scaling, handling up to 10,000 users through load balancing and database indexing, with provisions for sharding enrollments and submissions tables.
+- \textbf{Reliability}: The system shall achieve 99.9\% uptime, with ACID-compliant transactions for critical operations (e.g., enrollment approvals) and automatic backups of MySQL data.
+- \textbf{Usability}: The UI shall be accessible (WCAG 2.1 AA compliant), with responsive design for mobile/desktop and intuitive navigation via sidebar, ensuring users complete core tasks in under 3 clicks.
+- \textbf{Security}: All data shall be encrypted in transit (HTTPS) and at rest (password hashing); API endpoints shall be obfuscated (server-side execution) to prevent exposure; rate limiting shall restrict login attempts to 5 per minute.
+- \textbf{Maintainability}: Code shall adhere to OOP principles and modular design, with Prisma migrations for schema evolution and comprehensive documentation for future extensions.
+
+\subsection{Project Boundaries}
+The project boundaries define the scope to ensure focused development and avoid scope creep.
+
+\textbf{Inclusions:}
+- Core features: Authentication, enrollment, submissions, mailing, attendance tracking with auto-fail, role assignments, announcements, and notifications.
+- Supported Formats: File uploads limited to PDF, DOCX, LaTeX, PPT.
+- Internal Communications: Database-stored mails and notifications only; no external email integration in initial phase.
+- User Roles: Limited to students, teachers (with sub-roles), and admins.
+
+\textbf{Exclusions:}
+- Advanced Analytics: No built-in reporting dashboards for trends (e.g., attendance statistics across semesters).
+- Mobile App: Web-based only; no native iOS/Android apps.
+- Payment Integration: No handling of fees or financial transactions.
+- External Integrations: No API connections to third-party systems like LMS or HR software.
+- Multilingual Support: English-only interface.
+- Assumptions: Users have basic computer literacy; system assumes stable internet access.
+
+These boundaries help prioritize essential features while allowing for future expansions, such as integration with external notification services.
+
+\subsection{Team Roles and Responsibilities}
+The development team consists of four members, each with defined roles to ensure efficient collaboration.
+
+- \textbf{Raihan (Team Lead \& Full-Stack Developer)}: Oversees project architecture, implements backend APIs (Next.js routes), handles authentication and core features like enrollment and mailing. Responsible for integration and final reviews.
+- \textbf{Member 2 (Frontend Specialist)}: Develops React/Next.js components, designs responsive dashboards, forms, and user flows. Ensures UI/UX compliance with accessibility standards and Tailwind styling.
+- \textbf{Member 3 (Database \& Backend Developer)}: Designs MySQL schema, implements Prisma ORM models, manages file uploads (formidable), and develops attendance logic including auto-fail mechanisms.
+- \textbf{Member 4 (Features \& Testing Specialist)}: Implements specific modules like messaging, submissions, and notifications; conducts unit/integration testing, bug fixing, and prepares documentation.
+
+All members contribute to code reviews, meetings, and the final presentation. This distribution leverages individual strengths for balanced progress.
+
+\subsection{Development Process Model}
+The project adopts an \textbf{Agile Development Process Model} with Scrum elements to allow flexibility and iterative improvements. This model is chosen over Waterfall due to the evolving nature of requirements in educational software.
+
+- \textbf{Sprints}: 2-week cycles focusing on specific features (e.g., Sprint 1: Authentication; Sprint 2: Enrollment).
+- \textbf{Daily Stand-ups}: Short meetings for progress updates.
+- \textbf{Backlog Management}: Prioritized features using tools like Jira or Trello.
+- \textbf{Reviews \& Retrospectives}: End-of-sprint demos and feedback sessions.
+- \textbf{Advantages}: Accommodates changes, such as adding attendance updates, and ensures continuous user feedback.
+
+This model promotes collaboration, quick iterations, and high-quality deliverables within the timeline.
+
+\subsection{Technical Process}
+The technical process outlines the methodologies and tools for implementation, ensuring robustness and maintainability.
+
+- \textbf{Frontend Development}: Use Next.js with React components for modularity (e.g., AuthForm, Sidebar). State management via useState/useEffect for simple interactions; Tailwind CSS for responsive styling.
+- \textbf{Backend Development}: Next.js API routes for RESTful endpoints. Prisma for MySQL interactions to handle CRUD operations securely. OOP concepts: Base User class with inheritance for Student/Teacher/Admin, polymorphism for role-specific methods.
+- \textbf{Database Management}: MySQL via XAMPP; schema includes tables for users, students, teachers, courses, enrollments, submissions, materials, lesson plans, announcements, messages, notifications, and batch advisors. Prisma migrations for version control.
+- \textbf{Security Processes}: Bcrypt for password hashing (reversible encryption for students); JWT for authentication; formidable for secure file uploads with MIME validation. API routes are server-side to prevent exposure in browser developer tools.
+- \textbf{Testing}: Unit tests (Jest), integration tests, and manual UI testing.
+- \textbf{Deployment}: Local setup with XAMPP; potential cloud migration (e.g., AWS).
+
+This process emphasizes best practices like version control (Git) and code reviews to mitigate risks and ensure a scalable system.
+
+\chapter{UML Diagrams and Process Logic}
+
+% -------------------- USE CASE DIAGRAM PAGE --------------------
+\clearpage
+\thispagestyle{plain}
+\begin{center}
+\Large \textbf{Use Case Diagram}
+\end{center}
+
+\vspace{1em}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{usecase_diagram.png}
+\caption{Use Case Diagram for University Portal Management System}
+\label{fig:usecase}
+\end{figure}
+
+\clearpage
 
 % -------------------- SEQUENCE DIAGRAM PAGE --------------------
 \thispagestyle{plain}
